@@ -1,0 +1,87 @@
+// PARTIALS
+@import "partials/reset";
+
+// MIXINS
+$breakpoints: (
+  'medium': 500px,
+  'large':  800px
+) !default;
+
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media only screen and (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+  @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+
+// VARIABLES
+$button-color: blue;
+
+body{
+  width: 900px;
+  margin: 0 auto;
+
+}
+h1{
+  font-size: 72px;
+}
+
+h2{
+  font-size: 45px;
+}
+
+header {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  display: block;
+  display: flex;
+  flex-flow: row wrap;
+
+  h1{
+  flex: 1 0 auto;
+  }
+}
+
+.container {
+  padding: 10px 0px;
+  display: flex;
+  flex-flow: row wrap;
+
+  h2{
+    @include respond-to('large') {
+      font-size: 35;
+      flex: 1 1 auto;
+    }
+  }
+
+  p{
+    flex: 1 1 auto;
+    font-size: 20px;
+
+    @include respond-to('medium') {
+      flex: 1 1 auto;
+      font-size: 25px;
+    }
+  }
+}
+
+button {
+  font-size: 35px;
+  font-family: droid serif;
+  background-color: $button-color;
+  border-radius: 10px;
+  color: white;
+  margin: 10px 0;
+
+  &:hover{
+    background-color: aqua;
+    color: LemonChiffon;
+    font-size: 45px;
+    padding: 10px;
+  }
+}
